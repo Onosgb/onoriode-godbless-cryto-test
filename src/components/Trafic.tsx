@@ -1,8 +1,28 @@
 
 import * as Icon from 'react-bootstrap-icons';
+export interface TraficData {
+    title: string;
+    yesterday: number;
+    lastYesterday: number;
+    counts: number
+    dtTrafic1: string;
+    dtTrafic2?: string
+    conversation: string;
+    help: string;
+}
+export const Trafic: React.FC<{trafic: TraficData, 
+    children: React.ReactNode
+}> = ({trafic, children}) => {
+  
+  const bgColor = (count: number) => {
+  return  count <1 ? 'bg-danger' : count > 0?  'bg-success': '' 
+  }
 
-export const Trafic: React.FC<{children: React.ReactNode}> = ({children}) => {
-  return (
+  const color = (count: number) => {
+    return  count <1 ? 'text-danger' : count > 0 ? 'text-success': '' 
+    }
+
+    return (
     <div className="trafic">
     <div className="trafic__left">
         <div className="trafic__left__container">
@@ -18,29 +38,33 @@ export const Trafic: React.FC<{children: React.ReactNode}> = ({children}) => {
 
         <div className="trafic__left__details">
                 <div className="trafic__left__details__info">
-                <h3>Searches</h3>
-                <div className="info-container__card bg-success">+5%</div>
+                <h3 className=''>{trafic.title}</h3>
+                {
+                    trafic.counts > 0 || trafic.counts < 0 ? 
+                <div className={`info-container__card ${bgColor(trafic.counts) }`}>{trafic.counts > 0 ? '+':''}{trafic.counts}%</div>
+                : ''
+                }
                 </div>
                 <div className="trafic__left__details__info">
-                <h3>28 380</h3>
+                <h3>{trafic.yesterday}</h3>
                 <p className="trafic__left__details__info">Yesterday</p>
                 </div>
                 <div className="trafic__left__details__info">
-                <h3>28 380</h3>
+                <h3>{trafic.lastYesterday}</h3>
                 <p className="trafic__left__details__info">Yesterday</p>
                 </div>
         </div>
     </div>
     <div className="trafic__right">
     <div className="trafic__right__details__info">
-                <h3>Mobile Trafic: 100%</h3>
-                <h3>Web Trafic: 100%</h3>
+                <h3>{trafic.dtTrafic1}</h3>
+                <h3>{trafic?.dtTrafic2}</h3>
     </div>
     <div className="trafic__right__details__info">
-        <p className="trafic__right__details__info">You have get 100% of click on mobile and desktop devices</p>
+        <p className="trafic__right__details__info">{trafic.conversation}</p>
     </div>
     <div className="trafic__right__details__info">
-    <span>Help: </span><span className="text-primary">asdfasdfs</span>
+    <span>Help: </span><span className="text-primary">{trafic.help}</span>
     </div>
     </div>
 </div>

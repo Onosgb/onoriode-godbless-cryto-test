@@ -8,6 +8,8 @@
     gap: 2.5rem;
     padding: 5rem;
     overflow: auto;
+    height: 500px;
+
     .contents {
         margin-top: .5rem;
         @include align(flex, null, null, null, column);

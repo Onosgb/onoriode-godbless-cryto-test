@@ -1,17 +1,37 @@
+import { useState } from "react";
 
-// interface Time{
-//     Hours: string;
-//     click: () => void;
-// }
 
-const Hours: React.FC = () => {
+
+const Hours: React.FC<{timer: Function}> = ({timer}) => {
+  const [selected, setSelected] = useState('yesterday');
+  const [durations] = useState([
+    {
+      type: 'hour',
+      title: 'Last Hour'
+    },
+    {
+      type: 'today',
+      title: 'Today'
+    },
+    {
+      type: 'yesterday',
+      title: 'Yesterday'
+    },
+    {
+      type: '3days',
+      title: 'Last 3 Days'
+    }
+  ])
   return (
     <div className="hours">
-        <span className="hours__title">Last Hours</span>
-        <span className="hours__title">Today</span>
-        <span className="hours__title hours__active">Yesterday</span>
-        <span className="hours__title">Last 3 Days</span>
-
+      {
+        durations.map((duration, idx) => 
+        <span key={idx} className={`hours__title ${selected === duration.type ? "hours__active": ''}`} onClick={() => {
+          timer(duration.type)
+          setSelected(duration.type)
+        }}>{duration.title}</span>
+        )
+      }
     </div>
   )
 }

@@ -4,14 +4,12 @@ import { RootState } from "./store";
 import metricsService from "../services/data.service";
 
 interface MetricState {
-  metrics: Metrics[];
-  metric?: Metrics;
+  metrics?: Metrics;
   status: "idle" | "loading" | "failed";
 }
 
 const initialState: MetricState = {
-  metrics: [],
-  metric: undefined,
+  metrics: undefined,
   status: "idle",
 };
 
@@ -52,7 +50,7 @@ export const MetricSlice = createSlice({
 
   reducers: {
     selectMetric: (state, action: PayloadAction<Metrics | undefined>) => {
-      state.metric = action.payload;
+      state.metrics = action.payload;
     },
   },
 
@@ -64,7 +62,7 @@ export const MetricSlice = createSlice({
       .addCase(
         fetchMetricsAsync.fulfilled,
 
-        (state, action: PayloadAction<Metrics[]>) => {
+        (state, action: PayloadAction<Metrics>) => {
           if (action.payload) {
             state.metrics = action.payload;
           }
@@ -82,8 +80,7 @@ export const MetricSlice = createSlice({
         getMetricByIdAsync.fulfilled,
 
         (state, action: PayloadAction<Metrics>) => {
-          state.metric = action.payload;
-          state.metrics.push(action.payload);
+          state.metrics = action.payload;
           state.status = "idle";
         }
       )

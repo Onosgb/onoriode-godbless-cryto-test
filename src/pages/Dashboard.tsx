@@ -7,24 +7,55 @@ import Trafic from "../components/Trafic"
 import * as Icon from 'react-bootstrap-icons';
 import { useAppDispatch, useAppSelector } from "../store/hooks"
 import { fetchMetricsAsync, metricReducer } from "../store/metricSlice"
-import { useEffect } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { Count } from "../models/metrics"
 
 const Dashboard  = () => {
     const dispatch = useAppDispatch();
-    const {metrics, status} = useAppSelector(metricReducer)
+    const {metrics, status} = useAppSelector(metricReducer);
+    const [durations, setDuration] = useState<Count[]>([]);
+    const round = (count: number)  =>{
+        return Math.round(count)
+    }
 
+    const data = useMemo(() => {
+        return metrics?.data[0]
+    }, [metrics])
+    const selectTime =(type: string) => {
+        switch(type) {
+            case 'hour': setDuration(metrics?.errors_last_hour ? metrics.errors_last_hour: []);
+            break;
+            case 'today': setDuration(metrics?.errors_today ? metrics.errors_today: []);
+            break;
+            case '3days': setDuration(metrics?.errors_last_3days ? metrics.errors_last_3days: []);
+            break;
+            default: setDuration(metrics?.errors_yesterday ? metrics.errors_yesterday: []);
+            break;  
+        }
+    }
     // fetch metrics data
 
     useEffect(() => {
       dispatch(fetchMetricsAsync());      
     }, [])
 
- if(status === 'loading') return <h1>Loa</h1>
+    const isIndex  = (type: number) => {
+        switch(type) {
+            case 0: return 'bg-warning';
+            case 1: return'bg-secondary';
+            case 2: return 'bg-primary';
+            case 3: return 'bg-others';
+            default : return ''
+        }
+       
+    }
+
+ if(status === 'loading') return <h1>Loading...</h1>
   return (
     <div className="main">
         <div className="dashboard">
        <Header title="Main Metrics"/>
-       <Hours />
+       <Hours timer={selectTime}/>
         <div className="contents">
             <div className="contents__analysis">
              <Analysis />
@@ -42,26 +73,55 @@ const Dashboard  = () => {
             </div>
             <div className="contents__progress-info">   
                 <div className="contents__progress-info__data">
-                    <ProgressInfo className="bg-warning" percent='0,11%'/>
-                    <ProgressInfo className="bg-secondary" percent='0,11%'/>
-                    <ProgressInfo className=" bg-primary" percent='0,11%'/>
-                    <ProgressInfo className="bg-warning" percent='0,11%'/>
-                    <ProgressInfo className="bg-default" percent='0,11%'/>
+                  
+                    {
+                        durations.map((duration, idx) => <ProgressInfo key={idx} className={`${isIndex(idx)}`} error={duration}/>)
+                    }
                 </div>
             </div>
 
         </div>
-        <Trafic>
+        <Trafic trafic={{
+             title: 'Searches',
+             yesterday: data?.searches_current_yesterday ? data.searches_current_yesterday: 0,
+             lastYesterday: data?.searches_previous_yesterday ? data?.searches_previous_yesterday : 0,
+             counts: 5,
+             dtTrafic1: `Mobile trafic: ${round(data?.mobile_pessimizer ? data.mobile_pessimizer: 0)}%`,
+             dtTrafic2: `Web trafic: ${round(data?.web_pessimizer ? data.web_pessimizer: 0)}%`,
+             conversation: `You get ${round(data?.web_pessimizer ? data.web_pessimizer: 0)}% on mobile and desktop devices`,
+             help: "Searches, Permisation"
+        }}>
         <Icon.CircleFill className="circleFill green"/>
                 <Icon.FunnelFill/>
         </Trafic>    
            
-        <Trafic>
-        <Icon.CircleFill className="circleFill green"/>
+        <Trafic
+        trafic={{
+            title: 'Clicks',
+            yesterday: data?.clicks_current_yesterday ? data.clicks_current_yesterday: 0,
+            lastYesterday: data?.clicks_previous_yesterday ? data?.clicks_previous_yesterday : 0,
+            counts: -13,
+            dtTrafic1: `CRT: : ${round(data?.ctr_last_hour ? data.ctr_last_hour: 0)}%`,
+            conversation: `Conversion from searches to click on all devices`,
+            help: "CRT, Clicks"
+       }}
+        >
+        <Icon.CircleFill className="circleFill red"/>
                 <Icon.MenuButtonWide/>
         </Trafic>    
-        <Trafic>
-        <Icon.CircleFill className="circleFill green"/>
+        <Trafic
+        trafic={{
+            title: 'Bookings',
+            yesterday: data?.searches_current_yesterday ? data.searches_current_yesterday: 0,
+            lastYesterday: data?.searches_previous_yesterday ? data?.searches_previous_yesterday : 0,
+            counts: 0,
+            dtTrafic1: `Mobile trafic: ${round(data?.mobile_pessimizer ? data.mobile_pessimizer: 0)}%`,
+            dtTrafic2: `Web trafic: ${round(data?.web_pessimizer ? data.web_pessimizer: 0)}%`,
+            conversation: `You get ${round(data?.web_pessimizer ? data.web_pessimizer: 0)}% on mobile and desktop devices`,
+            help: "Searches, Permisation"
+       }}
+        >
+        <Icon.CircleFill className={`circleFill ${data?.bookings_current_last_hour && data.bookings_current_last_hour > 0? "green": "red"}`}/>
                 <Icon.Cart/>
         </Trafic>    
         </div>

@@ -1,7 +1,8 @@
 export interface Metrics {
-    errors_last_3days: Count[]
-      errors_yesterday: Count[];
-      errors_last_hour: Count[],
+    errors_last_3days?: Count[]
+      errors_yesterday?: Count[];
+      errors_last_hour?: Count[],
+      errors_today?: Count[],
       data: Item[]
     
 }

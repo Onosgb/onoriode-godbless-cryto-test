@@ -9,6 +9,8 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
+@include scroll;
+overflow: auto;
 }
 
 .container {
@@ -49,6 +51,12 @@ flex-direction: column;
     @include shape(5rem, 5rem, null, null);  
 }
 
+.text-danger {
+    color: $danger;
+}
+.text-default {
+    color: $black;
+}
 .bg-danger {
     background-color: $danger;
     color: $white;
