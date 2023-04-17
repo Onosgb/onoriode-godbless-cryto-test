@@ -38,7 +38,7 @@ export const Trafic: React.FC<{trafic: TraficData,
 
         <div className="trafic__left__details">
                 <div className="trafic__left__details__info">
-                <h3 className=''>{trafic.title}</h3>
+                <h3 className={`${color(trafic.counts)}`}>{trafic.title}</h3>
                 {
                     trafic.counts > 0 || trafic.counts < 0 ? 
                 <div className={`info-container__card ${bgColor(trafic.counts) }`}>{trafic.counts > 0 ? '+':''}{trafic.counts}%</div>
