@@ -168,7 +168,11 @@ const Dashboard = () => {
               data?.ctr_last_hour && data.ctr_last_hour < 0 ? "red" : "green"
             }`}
           />
-          <Icon.MenuButtonWide />
+          <img
+            src="/assets/img/touch-app.svg"
+            alt=""
+            style={{ fill: "white" }}
+          />
         </Trafic>
         <Trafic
           trafic={{
