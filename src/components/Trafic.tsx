@@ -46,7 +46,7 @@ export const Trafic: React.FC<{
           </div>
           <div className="trafic__left__details__info">
             <h3>{trafic.lastYesterday}</h3>
-            <p className="trafic__left__details__info">Yesterday</p>
+            <p className="trafic__left__details__info"> Last Yesterday</p>
           </div>
         </div>
       </div>
