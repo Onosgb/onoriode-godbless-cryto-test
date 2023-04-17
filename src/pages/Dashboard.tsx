@@ -169,7 +169,7 @@ const Dashboard = () => {
               data?.ctr_last_hour && data.ctr_last_hour < 0 ? "red" : "green"
             }`}
           />
-          <svg xmlns="/assets/img/touch-app.svg" fill="#fff"></svg>
+          <img src="/assets/img/touch-app.svg" alt="" />
         </Trafic>
         <Trafic
           trafic={{
