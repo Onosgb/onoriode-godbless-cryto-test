@@ -19,7 +19,7 @@ export const Trafic: React.FC<{trafic: TraficData,
   }
 
   const color = (count: number) => {
-    return  count <1 ? 'text-danger' : count > 0 ? 'text-success': '' 
+    return  count <0 ? 'text-danger' : count > 0 ? 'text-success': 'black' 
     }
 
     return (
@@ -38,7 +38,7 @@ export const Trafic: React.FC<{trafic: TraficData,
 
         <div className="trafic__left__details">
                 <div className="trafic__left__details__info">
-                <h3 className=''>{trafic.title}</h3>
+                <h3 className={color(trafic.counts)}>{trafic.title}</h3>
                 {
                     trafic.counts > 0 || trafic.counts < 0 ? 
                 <div className={`info-container__card ${bgColor(trafic.counts) }`}>{trafic.counts > 0 ? '+':''}{trafic.counts}%</div>
@@ -51,7 +51,7 @@ export const Trafic: React.FC<{trafic: TraficData,
                 </div>
                 <div className="trafic__left__details__info">
                 <h3>{trafic.lastYesterday}</h3>
-                <p className="trafic__left__details__info">Yesterday</p>
+                <p className="trafic__left__details__info">Last Yesterday</p>
                 </div>
         </div>
     </div>

@@ -24,6 +24,7 @@ const Dashboard  = () => {
     const selectTime =(type: string) => {
         switch(type) {
             case 'hour': setDuration(metrics?.errors_last_hour ? metrics.errors_last_hour: []);
+
             break;
             case 'today': setDuration(metrics?.errors_today ? metrics.errors_today: []);
             break;
@@ -36,7 +37,8 @@ const Dashboard  = () => {
     // fetch metrics data
 
     useEffect(() => {
-      dispatch(fetchMetricsAsync());      
+      dispatch(fetchMetricsAsync());    
+    // eslint-disable-next-line
     }, [])
 
     const isIndex  = (type: number) => {
@@ -58,9 +60,8 @@ const Dashboard  = () => {
        <Hours timer={selectTime}/>
         <div className="contents">
             <div className="contents__analysis">
-             <Analysis />
-             <Analysis />       
-             <Analysis />       
+             <Analysis errors={data?.errors_last_hour? `0,${data.errors_last_hour}%` : "0,0%"} avg={data?.avg_price_last_hour? `0,${data.avg_price_last_hour}%` : "0,0%"}/>
+             <Analysis errors={data?.errors_last_hour? `0,${data.errors_last_hour}%` : "0,0%"} avg={data?.avg_price_last_hour? `0,${data.avg_price_last_hour}%` : "0,0%"}/>  
 
 
             </div>
@@ -101,7 +102,7 @@ const Dashboard  = () => {
             yesterday: data?.clicks_current_yesterday ? data.clicks_current_yesterday: 0,
             lastYesterday: data?.clicks_previous_yesterday ? data?.clicks_previous_yesterday : 0,
             counts: -13,
-            dtTrafic1: `CRT: : ${round(data?.ctr_last_hour ? data.ctr_last_hour: 0)}%`,
+            dtTrafic1: `CRT: ${round(data?.ctr_last_hour ? data.ctr_last_hour: 0)}%`,
             conversation: `Conversion from searches to click on all devices`,
             help: "CRT, Clicks"
        }}
