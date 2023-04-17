@@ -1,0 +1,104 @@
+@use './variables' as *;
+
+@mixin card($bg, $br, $width, $height) {
+    background: $bg;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
+    border-radius: $br;
+    width: $width;
+    height: $height;
+    }
+
+@mixin position($position,$top, $left,$right,$bottom,$width,$height) {
+    position: $position;
+    top:$top;
+    left: $left;
+    bottom: $bottom;
+    right: $right;
+    width: $width;
+    height: $height;
+}
+
+@mixin align($flex, $justify-content, $align-items, $height, $fd) {
+    display: $flex;
+    align-items: $align-items;
+    justify-content: $justify-content;
+    height: $height;
+    flex-direction: $fd;
+}
+
+@mixin button($bg,$textColor,$height,$fontSize,$bdr,$paddingVertical,$paddingHorizontal) {
+    background: $bg;
+    color: $textColor;
+    text-decoration: none;
+    height: $height;
+    line-height: $height;
+    display: inline-block;
+    font-size: $fontSize;
+    font-weight: 400;
+    border-radius: $bdr;
+    padding: $paddingVertical $paddingHorizontal;
+    border:none;
+    outline: none;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+@mixin shape($width, $height, $color, $br) {
+    width: $width;
+    height: $height;
+    border-radius: $br;
+    background-color: $color;
+}
+
+@mixin scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #213f7d rgba(194, 198, 243, 0.247);
+    @include respond(phone) {
+      scrollbar-width: none;
+    }
+    &::-webkit-scrollbar {
+      width: 4px !important; /* width of the entire scrollbar */
+      
+    }
+    &::-webkit-scrollbar-track {
+      background: rgba(194, 198, 243, 0.247);
+      border: none; /* color of the tracking area */
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $ligthBlack; /* color of the scroll thumb */
+      border-radius: 20px; /* roundness of the scroll thumb */
+      // border: 3px solid orange; /* creates padding around scroll thumb */
+    }
+  }
+
+  @mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+      @media (max-width: 600px) {
+        @content;
+      }
+    }
+  
+    @if $breakpoint == tab-port {
+      @media (max-width: 1200px) {
+        @content;
+      }
+    }
+  
+    @if $breakpoint == tab-land-one {
+      @media (max-width: 1400px) {
+        @content;
+      }
+    }
+  
+    @if $breakpoint == tab-land {
+      @media (max-width: 1500px) {
+        @content;
+      }
+    }
+  
+    @if $breakpoint == large-screens {
+      @media (min-width: 1500px) {
+        @content;
+      }
+    }
+  }

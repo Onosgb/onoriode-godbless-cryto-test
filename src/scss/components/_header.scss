@@ -1,0 +1,10 @@
+@use '../abstracts/variables';
+.header {
+
+    &__title {
+        color: variables.$black;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 28px;
+    }
+}

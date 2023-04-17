@@ -1,11 +1,7 @@
 import React from 'react';
-import './main.scss'
+import Dashboard from './pages/Dashboard';
 function App() {
-  return (
-    <div className="App">
-        Welcome to metrics crypto
-    </div>
-  );
+  return <Dashboard />
 }
 
 export default App;

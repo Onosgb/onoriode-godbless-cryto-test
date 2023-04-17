@@ -1,0 +1,22 @@
+@use '../abstracts//mixins';
+@use '../abstracts/variables' as *;
+.progress {
+    height: 1rem;
+    display: flex;
+    max-width: 55rem;
+    &__warning {
+        @include mixins.shape(null, .8rem, $warning, 1px);
+    }
+
+    &__purple {
+        @include mixins.shape(null, .8rem, $purple, 1px);
+    }
+
+    &__primary {
+        @include mixins.shape(null, .8rem,#2196F3 , null);
+    }
+
+    &__others {
+        @include mixins.shape(null, .8rem, #A0B0B9, 1px);
+    }
+}

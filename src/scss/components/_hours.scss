@@ -1,0 +1,32 @@
+@use '../abstracts/mixins';
+@use '../abstracts/variables';
+
+
+.hours {
+    @include mixins.align(flex, null, center, auto, null);
+    border: 1px solid #D9D9D9;
+    border-radius: .4rem;
+    width: 35rem;
+    height: 3.2rem;
+   
+    &__title {
+        @include mixins.align(flex, center, center, 3.2rem, null);
+        border-right: 1px solid #D9D9D9;;
+        width: 10rem;
+        color: #4A4A4A;
+        cursor: pointer;
+        font-weight: 400;
+        font-size: 1.4rem;
+        line-height: 100%;
+
+    }
+
+    &__active {
+        color: variables.$white;
+        background: variables.$active;
+    }
+
+    :nth-last-child(1) {
+        border:none;
+    }
+}
