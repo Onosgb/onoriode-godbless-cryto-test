@@ -71,9 +71,27 @@ const Dashboard = () => {
         <Hours timer={selectTime} />
         <div className="contents">
           <div className="contents__analysis">
-            <Analysis />
-            <Analysis />
-            <Analysis />
+            <Analysis
+              title="Errors"
+              errors={data?.errors_yesterday ? data.errors_yesterday : 0}
+              avg={Math.floor(
+                data?.errors_yesterday ? data.errors_yesterday : 0
+              )}
+            />
+            <Analysis
+              title="Zeroes"
+              errors={data?.zeroes_yesterday ? data.zeroes_yesterday : 0}
+              avg={Math.floor(
+                data?.zeroes_yesterday ? data?.zeroes_yesterday : 0
+              )}
+            />
+            <Analysis
+              title="Timeouts"
+              errors={data?.timeout_yesterday ? data.timeout_yesterday : 0}
+              avg={Math.floor(
+                data?.timeout_yesterday ? data?.timeout_yesterday : 0
+              )}
+            />
           </div>
           <div className="progress">
             <Progress className="progress__warning" percentage="35%" />
