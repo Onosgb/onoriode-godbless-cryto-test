@@ -13,7 +13,7 @@ const Hours: React.FC<{ timer: Function }> = ({ timer }) => {
     },
     {
       type: "yesterday",
-      title: "Last Yesterday",
+      title: "Yesterday",
     },
     {
       type: "3days",
