@@ -168,34 +168,28 @@ const Dashboard = () => {
               data?.ctr_last_hour && data.ctr_last_hour < 0 ? "red" : "green"
             }`}
           />
-          <img
-            src="/assets/img/touch-app.svg"
-            alt=""
-            style={{ fill: "white" }}
-          />
+          <svg xmlns="/assets/img/touch-app.svg" fill="#fff"></svg>
         </Trafic>
         <Trafic
           trafic={{
             title: "Bookings",
-            yesterday: data?.searches_current_yesterday
-              ? data.searches_current_yesterday
+            yesterday: data?.bookings_current_yesterday
+              ? data.bookings_current_yesterday
               : 0,
-            lastYesterday: data?.searches_previous_yesterday
-              ? data?.searches_previous_yesterday
+            lastYesterday: data?.bookings_previous_yesterday
+              ? data?.bookings_previous_yesterday
               : 0,
             counts: data?.bookings_current_last_hour
               ? round(data?.bookings_current_last_hour)
               : 0,
-            dtTrafic1: `Mobile trafic: ${round(
-              data?.mobile_pessimizer ? data.mobile_pessimizer : 0
+            dtTrafic1: `STR: ${round(
+              data?.str_last_hour ? data.str_last_hour : 0
             )}%`,
-            dtTrafic2: `Web trafic: ${round(
-              data?.web_pessimizer ? data.web_pessimizer : 0
+            dtTrafic2: `STR: ${round(
+              data?.str_last_3days ? data.str_last_3days : 0
             )}%`,
-            conversation: `You get ${round(
-              data?.web_pessimizer ? data.web_pessimizer : 0
-            )}% on mobile and desktop devices`,
-            help: "Searches, Permisation",
+            conversation: "Conversion from click to bookings on all devices",
+            help: "Str, Booking, Avg, Check",
           }}
         >
           <Icon.CircleFill
