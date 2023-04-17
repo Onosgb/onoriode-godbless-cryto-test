@@ -45,6 +45,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(fetchMetricsAsync());
+    selectTime("yesterday");
     // eslint-disable-next-line
   }, []);
 
