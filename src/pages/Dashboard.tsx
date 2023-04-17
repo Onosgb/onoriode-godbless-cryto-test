@@ -5,8 +5,21 @@ import Progress from "../components/Progress"
 import ProgressInfo from "../components/ProgressInfo"
 import Trafic from "../components/Trafic"
 import * as Icon from 'react-bootstrap-icons';
+import { useAppDispatch, useAppSelector } from "../store/hooks"
+import { fetchMetricsAsync, metricReducer } from "../store/metricSlice"
+import { useEffect } from "react"
 
-function Dashboard() {
+const Dashboard  = () => {
+    const dispatch = useAppDispatch();
+    const {metrics, status} = useAppSelector(metricReducer)
+
+    // fetch metrics data
+
+    useEffect(() => {
+      dispatch(fetchMetricsAsync());      
+    }, [])
+
+ if(status === 'loading') return <h1>Loa</h1>
   return (
     <div className="main">
         <div className="dashboard">

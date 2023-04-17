@@ -1,8 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import metricReducer  from './metricSlice';
 
 export const store = configureStore({
   reducer: {
-    
+    metricsReduer: metricReducer
   },
 });
 
