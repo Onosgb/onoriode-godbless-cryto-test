@@ -102,7 +102,9 @@ const Dashboard = () => {
             lastYesterday: data?.searches_previous_yesterday
               ? data?.searches_previous_yesterday
               : 0,
-            counts: 5,
+            counts: data?.searches_current_last_hour
+              ? round(data?.searches_current_last_hour)
+              : 0,
             dtTrafic1: `Mobile trafic: ${round(
               data?.mobile_pessimizer ? data.mobile_pessimizer : 0
             )}%`,
@@ -115,7 +117,14 @@ const Dashboard = () => {
             help: "Searches, Permisation",
           }}
         >
-          <Icon.CircleFill className="circleFill green" />
+          <Icon.CircleFill
+            className={`circleFill ${
+              data?.searches_current_last_hour &&
+              data.searches_current_last_hour < 0
+                ? "red"
+                : "green"
+            }`}
+          />
           <Icon.FunnelFill />
         </Trafic>
 
@@ -128,15 +137,19 @@ const Dashboard = () => {
             lastYesterday: data?.clicks_previous_yesterday
               ? data?.clicks_previous_yesterday
               : 0,
-            counts: data?.ctr_last_hour ? round(data.ctr_last_hour) : 0,
-            dtTrafic1: `CRT: : ${round(
+            counts: data?.ctr_last_hour ? data.ctr_last_hour : 0,
+            dtTrafic1: `CRT: ${round(
               data?.ctr_last_hour ? data.ctr_last_hour : 0
             )}%`,
             conversation: `Conversion from searches to click on all devices`,
             help: "CRT, Clicks",
           }}
         >
-          <Icon.CircleFill className="circleFill red" />
+          <Icon.CircleFill
+            className={`circleFill ${
+              data?.ctr_last_hour && data.ctr_last_hour < 0 ? "red" : "green"
+            }`}
+          />
           <Icon.MenuButtonWide />
         </Trafic>
         <Trafic
