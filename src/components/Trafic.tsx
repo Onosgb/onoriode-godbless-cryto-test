@@ -1,6 +1,7 @@
 import * as Icon from "react-bootstrap-icons";
 import { bgColor, color, round } from "../utils/utils";
 export interface TraficData {
+  type: string;
   title: string;
   yesterday: number;
   lastYesterday: number;
@@ -42,7 +43,7 @@ export const Trafic: React.FC<{
           </div>
           <div className="trafic__left__details__info">
             <h3>{trafic.yesterday}</h3>
-            <p className="trafic__left__details__info">Yesterday</p>
+            <p className="trafic__left__details__info">{trafic.type}</p>
           </div>
           <div className="trafic__left__details__info">
             <h3>{trafic.lastYesterday}</h3>

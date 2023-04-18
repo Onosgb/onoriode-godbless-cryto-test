@@ -1,37 +1,42 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Metrics } from "../models/metrics";
+import { Item, Metrics } from "../models/metrics";
 import { RootState } from "./store";
 import metricsService from "../services/data.service";
 
 interface MetricState {
-  metrics?: Metrics;
+  metrics?: any;
+  selectedData: Item | undefined;
   status: "idle" | "loading" | "failed";
 }
 
 const initialState: MetricState = {
   metrics: undefined,
+  selectedData: undefined,
   status: "idle",
 };
 
-export const fetchMetricsAsync = createAsyncThunk("Metrics", async (thunkApi) => {
-  try {
-    const response = await metricsService();
-    console.log('metrids', response)
-    return response;
-  } catch (err: any) {
-    if (!err.response) {
-      throw err;
+export const fetchMetricsAsync = createAsyncThunk(
+  "Metrics",
+  async (thunkApi) => {
+    try {
+      const response = await metricsService();
+      console.log("metrids", response);
+      return response;
+    } catch (err: any) {
+      if (!err.response) {
+        throw err;
+      }
+      // We got validation errors, let's return those so we can reference in our component and set form errors
+      return err.response.data;
     }
-    // We got validation errors, let's return those so we can reference in our component and set form errors
-    return err.response.data;
   }
-});
+);
 
 export const getMetricByIdAsync = createAsyncThunk(
   "Metric/get",
   async (id: string, { rejectWithValue }) => {
     try {
-      const response = await metricsService()
+      const response = await metricsService();
 
       return response;
     } catch (err: any) {
@@ -48,11 +53,7 @@ export const MetricSlice = createSlice({
   name: "Metrics",
   initialState,
 
-  reducers: {
-    selectMetric: (state, action: PayloadAction<Metrics | undefined>) => {
-      state.metrics = action.payload;
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
@@ -90,7 +91,6 @@ export const MetricSlice = createSlice({
   },
 });
 
-export const { selectMetric } = MetricSlice.actions;
 export const metricReducer = (state: RootState) => state.metricsReduer;
 
 export default MetricSlice.reducer;

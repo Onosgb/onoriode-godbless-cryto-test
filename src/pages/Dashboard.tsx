@@ -8,60 +8,67 @@ import * as Icon from "react-bootstrap-icons";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { fetchMetricsAsync, metricReducer } from "../store/metricSlice";
 import { useEffect, useMemo, useState } from "react";
-import { Count } from "../models/metrics";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
   const { metrics, status } = useAppSelector(metricReducer);
-  const [durations, setDuration] = useState<Count[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState<string>("hour");
   const round = (count: number) => {
     return Math.round(count);
   };
 
-  // trafic data
-  const data = useMemo(() => {
-    return metrics?.data[0];
-  }, [metrics]);
+  // Filter data based on selected filter
+  const filteredData = useMemo(() => {
+    const data = metrics?.data.map((item: any) => {
+      const filteredItem: any = Object.create({});
+      Object.keys(item).forEach((key: any) => {
+        if (
+          key.includes(selectedFilter === "today" ? "hour" : selectedFilter) ||
+          key.includes("pessimizer")
+        ) {
+          const keyWithoutIndex = key.slice(0, key.lastIndexOf("_"));
+          filteredItem[keyWithoutIndex] = item[key];
+        }
+      });
+      return filteredItem ? filteredItem : undefined;
+    });
+    return data ? data[0] : [];
+  }, [selectedFilter, metrics]);
 
-  const selectTime = (type: string) => {
-    switch (type) {
-      case "hour":
-        setDuration(metrics?.errors_last_hour ? metrics.errors_last_hour : []);
-        break;
-      case "today":
-        setDuration(metrics?.errors_today ? metrics.errors_today : []);
-        break;
-      case "3days":
-        setDuration(
-          metrics?.errors_last_3days ? metrics.errors_last_3days : []
-        );
-        break;
-      default:
-        setDuration(metrics?.errors_yesterday ? metrics.errors_yesterday : []);
-        break;
+  const counts = useMemo(() => {
+    let filteredItem: any = [];
+    if (metrics) {
+      for (let key of Object.keys(metrics)) {
+        if (
+          key.includes(selectedFilter === "today" ? "hour" : selectedFilter)
+        ) {
+          filteredItem = metrics[key];
+          break;
+        }
+      }
     }
+    return filteredItem;
+  }, [selectedFilter, metrics]);
+
+  const filterData = (type: string) => {
+    setSelectedFilter(type);
   };
   // fetch metrics data
 
   useEffect(() => {
     dispatch(fetchMetricsAsync());
-    selectTime("yesterday");
+    setSelectedFilter("lasthour");
     // eslint-disable-next-line
   }, []);
 
-  const isIndex = (type: number) => {
-    switch (type) {
-      case 0:
-        return "bg-warning";
-      case 1:
-        return "bg-secondary";
-      case 2:
-        return "bg-primary";
-      case 3:
-        return "bg-others";
-      default:
-        return "";
+  const addtion = (...numbers: number[]) => {
+    let result = 0;
+    for (let r of numbers) {
+      if (r) {
+        result += r;
+      }
     }
+    return result;
   };
 
   if (status === "loading") return <h1>Loading...</h1>;
@@ -69,28 +76,62 @@ const Dashboard = () => {
     <div className="main">
       <div className="dashboard">
         <Header title="Main Metrics" />
-        <Hours timer={selectTime} />
+        <Hours filterData={filterData} />
         <div className="contents">
           <div className="contents__analysis">
             <Analysis
               title="Errors"
-              errors={data?.errors_yesterday ? data.errors_yesterday : 0}
+              errors={addtion(
+                filteredData.errors_current,
+                filteredData.errors,
+                filteredData.errors_previous_last,
+                filteredData.errors_current_last,
+                filteredData.errors_last
+              )}
               avg={Math.floor(
-                data?.errors_yesterday ? data.errors_yesterday : 0
+                addtion(
+                  filteredData.zeroes_current,
+                  filteredData.zeroes,
+                  filteredData.zeroes_previous_last,
+                  filteredData.zeroes_current_last,
+                  filteredData.zeroes_last
+                )
               )}
             />
             <Analysis
               title="Zeroes"
-              errors={data?.zeroes_yesterday ? data.zeroes_yesterday : 0}
+              errors={addtion(
+                filteredData.zeroes_current,
+                filteredData.zeroes,
+                filteredData.zeroes_previous_last,
+                filteredData.zeroes_current_last,
+                filteredData.zeroes_last
+              )}
               avg={Math.floor(
-                data?.zeroes_yesterday ? data?.zeroes_yesterday : 0
+                addtion(
+                  filteredData.zeroes_current,
+                  filteredData.zeroes,
+                  filteredData.zeroes_previous_last,
+                  filteredData.zeroes_current_last,
+                  filteredData.zeroes_last
+                )
               )}
             />
             <Analysis
               title="Timeouts"
-              errors={data?.timeout_yesterday ? data.timeout_yesterday : 0}
-              avg={Math.floor(
-                data?.timeout_yesterday ? data?.timeout_yesterday : 0
+              errors={addtion(
+                filteredData.timeout_current,
+                filteredData.timeout,
+                filteredData.timeout_previous_last,
+                filteredData.timeout_current_last,
+                filteredData.timeout_last
+              )}
+              avg={addtion(
+                filteredData.timeout_current,
+                filteredData.timeout,
+                filteredData.timeout_previous_last,
+                filteredData.timeout_current_last,
+                filteredData.timeout_last
               )}
             />
           </div>
@@ -102,44 +143,57 @@ const Dashboard = () => {
           </div>
           <div className="contents__progress-info">
             <div className="contents__progress-info__data">
-              {durations.map((duration, idx) => (
-                <ProgressInfo
-                  key={idx}
-                  className={`${isIndex(idx)}`}
-                  error={duration}
-                />
-              ))}
+              <ProgressInfo durations={counts} />
             </div>
           </div>
         </div>
         <Trafic
           trafic={{
             title: "Searches",
-            yesterday: data?.searches_current_yesterday
-              ? data.searches_current_yesterday
-              : 0,
-            lastYesterday: data?.searches_previous_yesterday
-              ? data?.searches_previous_yesterday
-              : 0,
-            counts: data?.searches_current_last_hour
-              ? round(data?.searches_current_last_hour)
-              : 0,
-            dtTrafic1: `Mobile trafic: ${round(
-              data?.mobile_pessimizer ? data.mobile_pessimizer : 0
-            )}%`,
-            dtTrafic2: `Web trafic: ${round(
-              data?.web_pessimizer ? data.web_pessimizer : 0
-            )}%`,
-            conversation: `You get ${round(
-              data?.web_pessimizer ? data.web_pessimizer : 0
-            )}% on mobile and desktop devices`,
+            type: selectedFilter,
+            yesterday: addtion(
+              filteredData.searches_current,
+              filteredData.searches,
+              filteredData.searches_previous_last,
+              filteredData.searches_current_last,
+              filteredData.searches_last
+            ),
+
+            lastYesterday: addtion(
+              filteredData.searches_current,
+              filteredData.searches,
+              filteredData.searches_previous_last,
+              filteredData.searches_current_last,
+              filteredData.searches_last
+            ),
+            counts: addtion(
+              filteredData.searches_current,
+              filteredData.searches,
+              filteredData.searches_previous_last,
+              filteredData.searches_current_last,
+              filteredData.searches_last
+            ),
+            dtTrafic1: `Mobile trafic: ${
+              filteredData && filteredData.mobile ? filteredData.mobile : 0
+            }%`,
+            dtTrafic2: `Web trafic: ${
+              filteredData && filteredData.web ? filteredData.web : 0
+            }%`,
+            conversation: `You get ${
+              filteredData && filteredData.web ? filteredData.web : 0
+            }% on mobile and desktop devices`,
             help: "Searches, Permisation",
           }}
         >
           <Icon.CircleFill
             className={`circleFill ${
-              data?.searches_current_last_hour &&
-              data.searches_current_last_hour < 0
+              addtion(
+                filteredData.searches_current,
+                filteredData.searches,
+                filteredData.searches_previous_last,
+                filteredData.searches_current_last,
+                filteredData.searches_last
+              ) < 0
                 ? "red"
                 : "green"
             }`}
@@ -150,15 +204,37 @@ const Dashboard = () => {
         <Trafic
           trafic={{
             title: "Clicks",
-            yesterday: data?.clicks_current_yesterday
-              ? data.clicks_current_yesterday
-              : 0,
-            lastYesterday: data?.clicks_previous_yesterday
-              ? data?.clicks_previous_yesterday
-              : 0,
-            counts: data?.ctr_last_hour ? data.ctr_last_hour : 0,
+            type: selectedFilter,
+
+            yesterday: addtion(
+              filteredData.clicks_current,
+              filteredData.clicks,
+              filteredData.clicks_previous_last,
+              filteredData.clicks_current_last,
+              filteredData.clicks_last
+            ),
+            lastYesterday: addtion(
+              filteredData.clicks_current,
+              filteredData.clicks,
+              filteredData.clicks_previous_last,
+              filteredData.clicks_current_last,
+              filteredData.clicks_last
+            ),
+            counts: addtion(
+              filteredData.clicks_current,
+              filteredData.clicks,
+              filteredData.clicks_previous_last,
+              filteredData.clicks_current_last,
+              filteredData.clicks_last
+            ),
             dtTrafic1: `CRT: ${round(
-              data?.ctr_last_hour ? data.ctr_last_hour : 0
+              addtion(
+                filteredData.ctr_current,
+                filteredData.ctr,
+                filteredData.ctr_previous_last,
+                filteredData.ctr_current_last,
+                filteredData.ctr_last
+              )
             )}%`,
             conversation: `Conversion from searches to click on all devices`,
             help: "CRT, Clicks",
@@ -166,7 +242,13 @@ const Dashboard = () => {
         >
           <Icon.CircleFill
             className={`circleFill ${
-              data?.ctr_last_hour && data.ctr_last_hour < 0 ? "red" : "green"
+              addtion(
+                filteredData.ctr_current,
+                filteredData.ctr_previous,
+                filteredData.ctr_last
+              ) < 0
+                ? "red"
+                : "green"
             }`}
           />
           <img src="/assets/img/touch-app.svg" alt="" />
@@ -174,20 +256,45 @@ const Dashboard = () => {
         <Trafic
           trafic={{
             title: "Bookings",
-            yesterday: data?.bookings_current_yesterday
-              ? data.bookings_current_yesterday
-              : 0,
-            lastYesterday: data?.bookings_previous_yesterday
-              ? data?.bookings_previous_yesterday
-              : 0,
-            counts: data?.bookings_current_last_hour
-              ? round(data?.bookings_current_last_hour)
-              : 0,
+            type: selectedFilter,
+            yesterday: addtion(
+              filteredData.bookings_current,
+              filteredData.bookings,
+              filteredData.bookings_previous_last,
+              filteredData.bookings_current_last,
+              filteredData.bookings_last
+            ),
+            lastYesterday: addtion(
+              filteredData.bookings_current,
+              filteredData.bookings,
+              filteredData.bookings_previous_last,
+              filteredData.bookings_current_last,
+              filteredData.bookings_last
+            ),
+            counts: addtion(
+              filteredData.bookings_current,
+              filteredData.bookings,
+              filteredData.bookings_previous_last,
+              filteredData.bookings_current_last,
+              filteredData.bookings_last
+            ),
             dtTrafic1: `STR: ${round(
-              data?.str_last_hour ? data.str_last_hour : 0
+              addtion(
+                filteredData.ctr_current,
+                filteredData.ctr,
+                filteredData.ctr_previous_last,
+                filteredData.ctr_current_last,
+                filteredData.ctr_last
+              )
             )}%`,
-            dtTrafic2: `STR: ${round(
-              data?.str_last_3days ? data.str_last_3days : 0
+            dtTrafic2: `CTR: ${round(
+              addtion(
+                filteredData.ctr_current,
+                filteredData.ctr,
+                filteredData.ctr_previous_last,
+                filteredData.ctr_current_last,
+                filteredData.ctr_last
+              )
             )}%`,
             conversation: "Conversion from click to bookings on all devices",
             help: "Str, Booking, Avg, Check",
@@ -195,8 +302,13 @@ const Dashboard = () => {
         >
           <Icon.CircleFill
             className={`circleFill ${
-              data?.bookings_current_last_hour &&
-              data.bookings_current_last_hour > 0
+              addtion(
+                filteredData.bookings_current,
+                filteredData.bookings,
+                filteredData.bookings_previous_last,
+                filteredData.bookings_current_last,
+                filteredData.bookings_last
+              ) > 0
                 ? "green"
                 : "red"
             }`}

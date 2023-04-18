@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const Hours: React.FC<{ timer: Function }> = ({ timer }) => {
-  const [selected, setSelected] = useState("yesterday");
+const Hours: React.FC<{ filterData: Function }> = ({ filterData }) => {
+  const [selected, setSelected] = useState("lasthour");
   const [durations] = useState([
     {
       type: "hour",
@@ -29,7 +29,7 @@ const Hours: React.FC<{ timer: Function }> = ({ timer }) => {
             selected === duration.type ? "hours__active" : ""
           }`}
           onClick={() => {
-            timer(duration.type);
+            filterData(duration.type);
             setSelected(duration.type);
           }}
         >
