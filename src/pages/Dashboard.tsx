@@ -57,7 +57,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(fetchMetricsAsync());
-    setSelectedFilter("lasthour");
+    setSelectedFilter("hour");
     // eslint-disable-next-line
   }, []);
 

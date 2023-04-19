@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const Hours: React.FC<{ filterData: Function }> = ({ filterData }) => {
-  const [selected, setSelected] = useState("lasthour");
+  const [selected, setSelected] = useState("hour");
   const [durations] = useState([
     {
       type: "hour",
