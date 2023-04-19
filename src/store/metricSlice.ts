@@ -20,7 +20,6 @@ export const fetchMetricsAsync = createAsyncThunk(
   async (thunkApi) => {
     try {
       const response = await metricsService();
-      console.log("metrids", response);
       return response;
     } catch (err: any) {
       if (!err.response) {

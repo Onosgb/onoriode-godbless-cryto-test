@@ -18,19 +18,19 @@ export const Trafic: React.FC<{
   return (
     <div className="trafic">
       <div className="trafic__left">
-        <div className="trafic__left__container">
-          <div className="large-circle bg-primary trafic__left__container__circle">
-            {children}
-          </div>
-          <div className="trafic__left__container__arrow">
-            <div className="square "></div>
-            <div className="triangle "></div>
-            <Icon.CaretDown className="triangle" />
-          </div>
+        <div className="large-circle bg-primary trafic__left__circle">
+          {children}
         </div>
+        <div className="trafic__left__arrow">
+          <div className="square "></div>
+          <div className="triangle "></div>
+          <Icon.CaretDown className="triangle" />
+        </div>
+      </div>
 
-        <div className="trafic__left__details">
-          <div className="trafic__left__details__info">
+      <div className="trafic__right">
+        <div className="trafic__right__details">
+          <div className="trafic__right__details__info">
             <h3 className={`${color(trafic.counts)}`}>{trafic.title}</h3>
             {trafic.counts > 0 || trafic.counts < 0 ? (
               <div className={`info-container__card ${bgColor(trafic.counts)}`}>
@@ -41,27 +41,27 @@ export const Trafic: React.FC<{
               ""
             )}
           </div>
-          <div className="trafic__left__details__info">
+          <div className="trafic__right__details_">
             <h3>{trafic.yesterday}</h3>
-            <p className="trafic__left__details__info">{trafic.type}</p>
+            <p className="trafic__right__details__info">{trafic.type}</p>
           </div>
-          <div className="trafic__left__details__info">
+          <div className="trafic__right__details__info">
             <h3>{trafic.lastYesterday}</h3>
-            <p className="trafic__left__details__info"> Last Yesterday</p>
+            <p className="trafic__right__details__info"> Last Yesterday</p>
           </div>
         </div>
-      </div>
-      <div className="trafic__right">
-        <div className="trafic__right__details__info">
-          <h3>{trafic.dtTrafic1}</h3>
-          <h3>{trafic?.dtTrafic2}</h3>
-        </div>
-        <div className="trafic__right__details__info">
-          <p className="trafic__right__details__info">{trafic.conversation}</p>
-        </div>
-        <div className="trafic__right__details__info">
-          <span>Help: </span>
-          <span className="text-primary">{trafic.help}</span>
+        <div className="trafic__right__details">
+          <div className="trafic__right__details__data">
+            <h3>{trafic.dtTrafic1}</h3>
+            <h3>{trafic?.dtTrafic2}</h3>
+          </div>
+          <div className="trafic__right__details__conversation">
+            <p className="">{trafic.conversation}</p>
+          </div>
+          <div className="trafic__right__details__help">
+            <span>Help: </span>
+            <span className="text-primary">{trafic.help}</span>
+          </div>
         </div>
       </div>
     </div>
