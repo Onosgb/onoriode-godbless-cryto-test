@@ -41,13 +41,13 @@ export const Trafic: React.FC<{
               ""
             )}
           </div>
-          <div className="trafic__right__details_">
+          <div className="trafic__right__details__info">
             <h3>{trafic.yesterday}</h3>
-            <p className="trafic__right__details__info">{trafic.type}</p>
+            <p>{trafic.type}</p>
           </div>
           <div className="trafic__right__details__info">
             <h3>{trafic.lastYesterday}</h3>
-            <p className="trafic__right__details__info"> Last Yesterday</p>
+            <p> Last Yesterday</p>
           </div>
         </div>
         <div className="trafic__right__details">

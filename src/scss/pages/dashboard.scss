@@ -62,7 +62,7 @@
 
   .trafic {
     display: flex;
-    justify-content: space-between;
+
     gap: 1rem;
     &__left {
       width: 5rem;
@@ -125,9 +125,9 @@
       width: 500px;
       padding-bottom: 2.5rem;
       border-bottom: 4px solid #eff1f4;
-
       display: flex;
       justify-content: space-between;
+
       &__details {
         display: flex;
         flex-direction: column;
