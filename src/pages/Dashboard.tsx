@@ -142,9 +142,7 @@ const Dashboard = () => {
             <Progress className="progress__others" percentage="15%" />
           </div>
           <div className="contents__progress-info">
-            <div className="contents__progress-info__data">
-              <ProgressInfo durations={counts} />
-            </div>
+            <ProgressInfo durations={counts} />
           </div>
         </div>
         <Trafic
@@ -198,7 +196,7 @@ const Dashboard = () => {
                 : "green"
             }`}
           />
-          <Icon.FunnelFill />
+          <i className="icofont-filter icon"></i>
         </Trafic>
 
         <Trafic
@@ -251,7 +249,7 @@ const Dashboard = () => {
                 : "green"
             }`}
           />
-          <img src="/assets/img/touch-app.svg" alt="" />
+          <i className="icofont-touch icon"></i>
         </Trafic>
         <Trafic
           trafic={{
@@ -313,7 +311,7 @@ const Dashboard = () => {
                 : "red"
             }`}
           />
-          <Icon.Cart />
+          <i className="icofont-cart-alt icon"></i>
         </Trafic>
       </div>
     </div>
