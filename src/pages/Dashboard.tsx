@@ -87,14 +87,12 @@ const Dashboard = () => {
               title="Errors"
               errors={addtion(
                 filteredData.errors_current,
-                filteredData.errors,
                 filteredData.errors_previous_last,
                 filteredData.errors_current_last,
                 filteredData.errors_last
               )}
               avg={avg(
                 filteredData.zeroes_current,
-                filteredData.zeroes,
                 filteredData.zeroes_previous_last,
                 filteredData.zeroes_current_last,
                 filteredData.zeroes_last
@@ -111,7 +109,6 @@ const Dashboard = () => {
               )}
               avg={avg(
                 filteredData.zeroes_current,
-                filteredData.zeroes,
                 filteredData.zeroes_previous_last,
                 filteredData.zeroes_current_last,
                 filteredData.zeroes_last
@@ -121,17 +118,11 @@ const Dashboard = () => {
               title="Timeouts"
               errors={addtion(
                 filteredData.timeout_current,
-                filteredData.timeout,
                 filteredData.timeout_previous_last,
                 filteredData.timeout_current_last,
                 filteredData.timeout_last
               )}
-              avg={avg(
-                filteredData.timeout,
-                filteredData.timeout_previous_last,
-                filteredData.timeout_current_last,
-                filteredData.timeout_last
-              )}
+              avg={filteredData.a}
             />
           </div>
           <div className="progress">
@@ -153,7 +144,7 @@ const Dashboard = () => {
             current_last: filteredData.searches_current_last,
             last: filteredData.searches_last,
 
-            counts: addtion(filteredData.searches),
+            counts: addtion(filteredData.searches_current_last),
             dtTrafic1: `Mobile trafic: ${
               filteredData && filteredData.mobile ? filteredData.mobile : 0
             }%`,
@@ -168,7 +159,7 @@ const Dashboard = () => {
         >
           <Icon.CircleFill
             className={`circleFill ${
-              addtion(filteredData.searches) < 0 ? "red" : "green"
+              addtion(filteredData.searches_current_last) < 0 ? "red" : "green"
             }`}
           />
           <i className="icofont-filter icon"></i>
@@ -182,15 +173,15 @@ const Dashboard = () => {
             previous: filteredData.clicks_previous_last,
             current_last: filteredData.clicks_current_last,
             last: filteredData.clicks_last,
-            counts: addtion(filteredData.clicks),
-            dtTrafic1: `CRT: ${round(addtion(filteredData.ctr))}%`,
+            counts: addtion(filteredData.clicks_current_last),
+            dtTrafic1: `CRT: ${round(addtion(filteredData.ctr_last))}%`,
             conversation: `Conversion from searches to click on all devices`,
             help: "CRT, Clicks",
           }}
         >
           <Icon.CircleFill
             className={`circleFill ${
-              addtion(filteredData.ctr) < 0 ? "red" : "green"
+              addtion(filteredData.clicks_current_last) < 0 ? "red" : "green"
             }`}
           />
           <i className="icofont-touch icon"></i>
@@ -205,7 +196,7 @@ const Dashboard = () => {
             current_last: filteredData.bookings_current_last,
             last: filteredData.bookings_last,
 
-            counts: addtion(filteredData.bookings),
+            counts: addtion(filteredData.bookings_current_last),
             dtTrafic1: `STR: ${round(addtion(filteredData.str_last))}%`,
             dtTrafic2: `CTR: ${round(addtion(filteredData.ctr_last))}%`,
             conversation: "Conversion from click to bookings on all devices",
@@ -214,7 +205,7 @@ const Dashboard = () => {
         >
           <Icon.CircleFill
             className={`circleFill ${
-              addtion(filteredData.bookings) > 0 ? "green" : "red"
+              addtion(filteredData.bookings_current_last) > 0 ? "green" : "red"
             }`}
           />
           <i className="icofont-cart-alt icon"></i>
