@@ -71,6 +71,10 @@ const Dashboard = () => {
     return result;
   };
 
+  const avg = (...numbers: number[]): number => {
+    return addtion(...numbers) / numbers.length;
+  };
+
   if (status === "loading") return <h1>Loading...</h1>;
   return (
     <div className="main">
@@ -88,14 +92,12 @@ const Dashboard = () => {
                 filteredData.errors_current_last,
                 filteredData.errors_last
               )}
-              avg={Math.floor(
-                addtion(
-                  filteredData.zeroes_current,
-                  filteredData.zeroes,
-                  filteredData.zeroes_previous_last,
-                  filteredData.zeroes_current_last,
-                  filteredData.zeroes_last
-                )
+              avg={avg(
+                filteredData.zeroes_current,
+                filteredData.zeroes,
+                filteredData.zeroes_previous_last,
+                filteredData.zeroes_current_last,
+                filteredData.zeroes_last
               )}
             />
             <Analysis
@@ -107,14 +109,12 @@ const Dashboard = () => {
                 filteredData.zeroes_current_last,
                 filteredData.zeroes_last
               )}
-              avg={Math.floor(
-                addtion(
-                  filteredData.zeroes_current,
-                  filteredData.zeroes,
-                  filteredData.zeroes_previous_last,
-                  filteredData.zeroes_current_last,
-                  filteredData.zeroes_last
-                )
+              avg={avg(
+                filteredData.zeroes_current,
+                filteredData.zeroes,
+                filteredData.zeroes_previous_last,
+                filteredData.zeroes_current_last,
+                filteredData.zeroes_last
               )}
             />
             <Analysis
@@ -126,8 +126,7 @@ const Dashboard = () => {
                 filteredData.timeout_current_last,
                 filteredData.timeout_last
               )}
-              avg={addtion(
-                filteredData.timeout_current,
+              avg={avg(
                 filteredData.timeout,
                 filteredData.timeout_previous_last,
                 filteredData.timeout_current_last,
@@ -149,19 +148,12 @@ const Dashboard = () => {
           trafic={{
             title: "Searches",
             type: selectedFilter,
-            trafic: filteredData.searches,
             current: filteredData.searches_current,
             previous: filteredData.searches_previous_last,
             current_last: filteredData.searches_current_last,
             last: filteredData.searches_last,
 
-            counts: addtion(
-              filteredData.searches_current,
-              filteredData.searches,
-              filteredData.searches_previous_last,
-              filteredData.searches_current_last,
-              filteredData.searches_last
-            ),
+            counts: addtion(filteredData.searches),
             dtTrafic1: `Mobile trafic: ${
               filteredData && filteredData.mobile ? filteredData.mobile : 0
             }%`,
@@ -176,15 +168,7 @@ const Dashboard = () => {
         >
           <Icon.CircleFill
             className={`circleFill ${
-              addtion(
-                filteredData.searches_current,
-                filteredData.searches,
-                filteredData.searches_previous_last,
-                filteredData.searches_current_last,
-                filteredData.searches_last
-              ) < 0
-                ? "red"
-                : "green"
+              addtion(filteredData.searches) < 0 ? "red" : "green"
             }`}
           />
           <i className="icofont-filter icon"></i>
@@ -194,40 +178,19 @@ const Dashboard = () => {
           trafic={{
             title: "Clicks",
             type: selectedFilter,
-            trafic: filteredData.clicks,
             current: filteredData.clicks_current,
             previous: filteredData.clicks_previous_last,
             current_last: filteredData.clicks_current_last,
             last: filteredData.clicks_last,
-            counts: addtion(
-              filteredData.clicks_current,
-              filteredData.clicks,
-              filteredData.clicks_previous_last,
-              filteredData.clicks_current_last,
-              filteredData.clicks_last
-            ),
-            dtTrafic1: `CRT: ${round(
-              addtion(
-                filteredData.ctr_current,
-                filteredData.ctr,
-                filteredData.ctr_previous_last,
-                filteredData.ctr_current_last,
-                filteredData.ctr_last
-              )
-            )}%`,
+            counts: addtion(filteredData.clicks),
+            dtTrafic1: `CRT: ${round(addtion(filteredData.ctr))}%`,
             conversation: `Conversion from searches to click on all devices`,
             help: "CRT, Clicks",
           }}
         >
           <Icon.CircleFill
             className={`circleFill ${
-              addtion(
-                filteredData.ctr_current,
-                filteredData.ctr_previous,
-                filteredData.ctr_last
-              ) < 0
-                ? "red"
-                : "green"
+              addtion(filteredData.ctr) < 0 ? "red" : "green"
             }`}
           />
           <i className="icofont-touch icon"></i>
@@ -237,15 +200,14 @@ const Dashboard = () => {
             title: "Bookings",
             type: selectedFilter,
 
-            trafic: filteredData.bookings,
             current: filteredData.bookings_current,
             previous: filteredData.bookings_previous_last,
             current_last: filteredData.bookings_current_last,
             last: filteredData.bookings_last,
 
             counts: addtion(filteredData.bookings),
-            dtTrafic1: `STR: ${round(addtion(filteredData.ctr))}%`,
-            dtTrafic2: `CTR: ${round(addtion(filteredData.ctr))}%`,
+            dtTrafic1: `STR: ${round(addtion(filteredData.str_last))}%`,
+            dtTrafic2: `CTR: ${round(addtion(filteredData.ctr_last))}%`,
             conversation: "Conversion from click to bookings on all devices",
             help: "Str, Booking, Avg, Check",
           }}

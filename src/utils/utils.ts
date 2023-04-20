@@ -7,5 +7,9 @@ export const bgColor = (count: number) => {
 };
 
 export const color = (count: number) => {
-  return count < 0 ? "text-danger" : count > 0 ? "text-success" : "";
+  return count < 0
+    ? "text-danger"
+    : count > 0
+    ? "text-success"
+    : "text-primary";
 };

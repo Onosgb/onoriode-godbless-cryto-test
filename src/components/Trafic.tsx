@@ -1,7 +1,6 @@
 import * as Icon from "react-bootstrap-icons";
 import { bgColor, color, round } from "../utils/utils";
 export interface TraficData {
-  trafic: number;
   current: number;
   previous: number;
   last: number;
@@ -42,16 +41,10 @@ export const Trafic: React.FC<{
             </div>
           </div>
 
-          {trafic.trafic && (
-            <div className="trafic__right__details__info">
-              <h3>{trafic.trafic}</h3>
-              <p> {trafic.type}</p>
-            </div>
-          )}
           {trafic.current && (
             <div className="trafic__right__details__info">
               <h3>{trafic.current}</h3>
-              <p> Current {trafic.type}</p>
+              <p> {trafic.type}</p>
             </div>
           )}
           {trafic.previous && (
