@@ -20,7 +20,7 @@ const ProgressInfo: React.FC<{ durations: Count[] }> = ({ durations }) => {
     <>
       {durations ? (
         durations.map((duration: any, idx: number) => (
-          <div className="contents__progress-info__data">
+          <div className="contents__progress-info__data" key={idx}>
             <div className={`small-sqr ${isIndex(idx)}`}></div>
             {duration.code && duration.count ? (
               <p className="sub-title">

@@ -1,10 +1,13 @@
 import * as Icon from "react-bootstrap-icons";
 import { bgColor, color, round } from "../utils/utils";
 export interface TraficData {
+  trafic: number;
+  current: number;
+  previous: number;
+  last: number;
+  current_last: number;
   type: string;
   title: string;
-  yesterday: number;
-  lastYesterday: number;
   counts: number;
   dtTrafic1: string;
   dtTrafic2?: string;
@@ -32,23 +35,44 @@ export const Trafic: React.FC<{
         <div className="trafic__right__details">
           <div className="trafic__right__details__info">
             <h3 className={`${color(trafic.counts)}`}>{trafic.title}</h3>
-            {trafic.counts > 0 || trafic.counts < 0 ? (
-              <div className={`info-container__card ${bgColor(trafic.counts)}`}>
-                {trafic.counts > 0 ? "+" : ""}
-                {round(trafic.counts)}%
-              </div>
-            ) : (
-              ""
-            )}
+
+            <div className={`info-container__card ${bgColor(trafic.counts)}`}>
+              {trafic.counts > 0 ? "+" : ""}
+              {round(trafic.counts)}%
+            </div>
           </div>
-          <div className="trafic__right__details__info">
-            <h3>{trafic.yesterday}</h3>
-            <p>{trafic.type}</p>
-          </div>
-          <div className="trafic__right__details__info">
-            <h3>{trafic.lastYesterday}</h3>
-            <p> Last Yesterday</p>
-          </div>
+
+          {trafic.trafic && (
+            <div className="trafic__right__details__info">
+              <h3>{trafic.trafic}</h3>
+              <p> {trafic.type}</p>
+            </div>
+          )}
+          {trafic.current && (
+            <div className="trafic__right__details__info">
+              <h3>{trafic.current}</h3>
+              <p> Current {trafic.type}</p>
+            </div>
+          )}
+          {trafic.previous && (
+            <div className="trafic__right__details__info">
+              <h3>{trafic.previous}</h3>
+              <p> Previous {trafic.type}</p>
+            </div>
+          )}
+          {trafic.last && (
+            <div className="trafic__right__details__info">
+              <h3>{trafic.last}</h3>
+              <p> Last {trafic.type}</p>
+            </div>
+          )}
+
+          {trafic.last && (
+            <div className="trafic__right__details__info">
+              <h3>{trafic.current_last}</h3>
+              <p> Current Last {trafic.type}</p>
+            </div>
+          )}
         </div>
         <div className="trafic__right__details">
           <div className="trafic__right__details__data">

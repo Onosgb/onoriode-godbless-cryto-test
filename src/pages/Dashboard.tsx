@@ -149,21 +149,12 @@ const Dashboard = () => {
           trafic={{
             title: "Searches",
             type: selectedFilter,
-            yesterday: addtion(
-              filteredData.searches_current,
-              filteredData.searches,
-              filteredData.searches_previous_last,
-              filteredData.searches_current_last,
-              filteredData.searches_last
-            ),
+            trafic: filteredData.searches,
+            current: filteredData.searches_current,
+            previous: filteredData.searches_previous_last,
+            current_last: filteredData.searches_current_last,
+            last: filteredData.searches_last,
 
-            lastYesterday: addtion(
-              filteredData.searches_current,
-              filteredData.searches,
-              filteredData.searches_previous_last,
-              filteredData.searches_current_last,
-              filteredData.searches_last
-            ),
             counts: addtion(
               filteredData.searches_current,
               filteredData.searches,
@@ -203,21 +194,11 @@ const Dashboard = () => {
           trafic={{
             title: "Clicks",
             type: selectedFilter,
-
-            yesterday: addtion(
-              filteredData.clicks_current,
-              filteredData.clicks,
-              filteredData.clicks_previous_last,
-              filteredData.clicks_current_last,
-              filteredData.clicks_last
-            ),
-            lastYesterday: addtion(
-              filteredData.clicks_current,
-              filteredData.clicks,
-              filteredData.clicks_previous_last,
-              filteredData.clicks_current_last,
-              filteredData.clicks_last
-            ),
+            trafic: filteredData.clicks,
+            current: filteredData.clicks_current,
+            previous: filteredData.clicks_previous_last,
+            current_last: filteredData.clicks_current_last,
+            last: filteredData.clicks_last,
             counts: addtion(
               filteredData.clicks_current,
               filteredData.clicks,
@@ -255,60 +236,23 @@ const Dashboard = () => {
           trafic={{
             title: "Bookings",
             type: selectedFilter,
-            yesterday: addtion(
-              filteredData.bookings_current,
-              filteredData.bookings,
-              filteredData.bookings_previous_last,
-              filteredData.bookings_current_last,
-              filteredData.bookings_last
-            ),
-            lastYesterday: addtion(
-              filteredData.bookings_current,
-              filteredData.bookings,
-              filteredData.bookings_previous_last,
-              filteredData.bookings_current_last,
-              filteredData.bookings_last
-            ),
-            counts: addtion(
-              filteredData.bookings_current,
-              filteredData.bookings,
-              filteredData.bookings_previous_last,
-              filteredData.bookings_current_last,
-              filteredData.bookings_last
-            ),
-            dtTrafic1: `STR: ${round(
-              addtion(
-                filteredData.ctr_current,
-                filteredData.ctr,
-                filteredData.ctr_previous_last,
-                filteredData.ctr_current_last,
-                filteredData.ctr_last
-              )
-            )}%`,
-            dtTrafic2: `CTR: ${round(
-              addtion(
-                filteredData.ctr_current,
-                filteredData.ctr,
-                filteredData.ctr_previous_last,
-                filteredData.ctr_current_last,
-                filteredData.ctr_last
-              )
-            )}%`,
+
+            trafic: filteredData.bookings,
+            current: filteredData.bookings_current,
+            previous: filteredData.bookings_previous_last,
+            current_last: filteredData.bookings_current_last,
+            last: filteredData.bookings_last,
+
+            counts: addtion(filteredData.bookings),
+            dtTrafic1: `STR: ${round(addtion(filteredData.ctr))}%`,
+            dtTrafic2: `CTR: ${round(addtion(filteredData.ctr))}%`,
             conversation: "Conversion from click to bookings on all devices",
             help: "Str, Booking, Avg, Check",
           }}
         >
           <Icon.CircleFill
             className={`circleFill ${
-              addtion(
-                filteredData.bookings_current,
-                filteredData.bookings,
-                filteredData.bookings_previous_last,
-                filteredData.bookings_current_last,
-                filteredData.bookings_last
-              ) > 0
-                ? "green"
-                : "red"
+              addtion(filteredData.bookings) > 0 ? "green" : "red"
             }`}
           />
           <i className="icofont-cart-alt icon"></i>
