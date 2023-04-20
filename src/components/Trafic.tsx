@@ -60,7 +60,7 @@ export const Trafic: React.FC<{
             </div>
           )}
 
-          {trafic.last && (
+          {trafic.current_last && (
             <div className="trafic__right__details__info">
               <h3>{trafic.current_last}</h3>
               <p> Current Last {trafic.type}</p>
