@@ -8,6 +8,7 @@
   gap: 2.5rem;
   padding: 5rem;
   overflow: auto;
+  overflow-x: hidden;
   height: 500px;
 
   // responsiveness
@@ -22,7 +23,7 @@
     gap: 0.5rem;
     &__analysis {
       @include align(flex, space-between, null, nul, null);
-      width: 60rem;
+      width: auto;
       padding-top: 0.5rem;
 
       &__pointer {
