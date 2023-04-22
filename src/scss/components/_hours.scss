@@ -1,16 +1,16 @@
-@use '../abstracts/mixins';
-@use '../abstracts/variables';
-
-
+@use '../abstracts/index' as abs;
 .hours {
-    @include mixins.align(flex, null, center, auto, null);
+    @include abs.align(flex, null, center, auto, null);
     border: 1px solid #D9D9D9;
     border-radius: .4rem;
     width: 35rem;
     height: 3.2rem;
-   
+    @include abs.respond(phone) {
+        width: 100%;
+       
+      }
     &__title {
-        @include mixins.align(flex, center, center, 3.2rem, null);
+        @include abs.align(flex, center, center, 3.2rem, null);
         border-right: 1px solid #D9D9D9;;
         width: 10rem;
         color: #4A4A4A;
@@ -22,8 +22,8 @@
     }
 
     &__active {
-        color: variables.$white;
-        background: variables.$active;
+        color: abs.$white;
+        background: abs.$active;
     }
 
     :nth-last-child(1) {

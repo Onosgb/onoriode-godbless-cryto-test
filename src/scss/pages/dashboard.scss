@@ -1,137 +1,181 @@
-@use '../abstracts/mixins' as *;
-@use '../abstracts/variables' as *;
+@use "../abstracts/mixins" as *;
+@use "../abstracts/variables" as *;
 
 .dashboard {
-    @include scroll;
-    @include card($white, 10px, 70.5rem, 80vh);
-    @include align(flex, null, null, 80vh, column);
-    gap: 2.5rem;
-    padding: 5rem;
-    overflow: auto;
-    height: 500px;
+  @include scroll;
+  @include card($white, 10px, 70.5rem, 80vh);
+  @include align(flex, null, null, 80vh, column);
+  gap: 2.5rem;
+  padding: 5rem;
+  overflow: auto;
+  height: 500px;
 
-    .contents {
-        margin-top: .5rem;
-        @include align(flex, null, null, null, column);
-        gap: .5rem;
-        &__analysis {
-            @include align(flex, space-between, null, nul, null);
-            width: 55rem;
-            padding-top: .5rem;
-                
-            &__pointer {
-                @include align(flex, null, null, null, null);
-                &__container {
-                    width: 1.5rem;
-                    height: auto;
-                    padding-top: 1rem;
-                    &__circle {
-                    background-color: $success;
-                    border-radius: 50%;
-                    width: 1rem;
-                    height: 1rem;
-                    }
-                }
-               &__percentage {
-                &__title {
-                    font-weight: 600;
-                    font-size: 1.6rem;
-                    line-height: 2.8rem;
-                }
+  // responsiveness
+  @include respond(phone) {
+    width: 95%;
+    padding: 2rem;
+    height: 95vh;
+  }
+  .contents {
+    margin-top: 0.5rem;
+    @include align(flex, null, null, null, column);
+    gap: 0.5rem;
+    &__analysis {
+      @include align(flex, space-between, null, nul, null);
+      width: 60rem;
+      padding-top: 0.5rem;
 
-                &__subtitle {
-                    font-weight: 600;
-                    font-size: 12px;
-                    line-height: 16px;
-                }
-                
-               } 
+      &__pointer {
+        @include align(flex, null, null, null, null);
+        &__container {
+          width: 1.5rem;
+          height: auto;
+          padding-top: 1rem;
+          &__circle {
+            background-color: $success;
+            border-radius: 50%;
+            width: 1rem;
+            height: 1rem;
+          }
         }
+        &__percentage {
+          &__title { 
+            font-weight: 600;
+            font-size: 1.6rem;
+            line-height: 2.8rem;
+            color: $black;
+          }
+
+          &__subtitle {
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 16px;
+          }
+        }
+      }
     }
-    
+
     &__progress-info {
-        display: flex;
-        width: 55rem;
-        padding-top: .5rem;
-        gap: 1.5rem;
-       &__data {
+      display: flex;
+      width: 60rem;
+      padding-top: 0.5rem;
+      gap: 2.5rem;
+      &__data {
         @include align(flex, space-between, center, nul, null);
         gap: 0.5rem;
-       }
-    }
-    }
-
-    .trafic {
-        display: flex;
-        justify-content: space-between;
-        
-        &__left {
-           display: flex; 
-           gap: 2.5rem;
-            &__container {
-                display: flex;
-                justify-content: center;
-                width: 5rem;
-                height: auto;
-                flex-wrap: wrap;
-                &__circle {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    position: relative;
-
-                    .circleFill {
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        width: 0.9rem;
-                        border: 1px sold #fff;
-                    }
-
-                    .red {
-                        fill: $danger;
-                    }
-
-                    .green {
-                        fill: $success;
-                    }
-                    >svg {
-                        width: 1.6rem;
-                        height: 1.8rem;
-                        fill: $white;
-                    }
-                }
-                
-                &__arrow {
-                    .square {
-                        height: 7.8rem;
-                        clip-path: polygon(53% 0, 82% 0, 69% 59%, 59% 100%, 31% 100%, 25% 60%, 18% 0);
-                        background-color: #ece4e4;
-                    }
-                    .triangle {
-                        width: 0.9rem;
-                        height: .5rem;
-                        clip-path: polygon(50% 64%, 2% 0, 100% 0);
-                        background-color: #ece4e4;
-                    }
-                }
-            }
-
-            &__details {
-                display: flex;
-                gap: 1.5rem;
-                flex-direction: column;
-
-                &__info {
-                    display: flex;
-                    gap: 1rem;
-                }
-            }
+        > h3 {
+          color: $black;
         }
+      }
+    }
+  }
+
+  .trafic {
+    @include align(flex, space-between, null, nul, null);
+    gap: 1rem;
+    &__left {
+      width: 5rem;
+      @include align(flex, center, null, null, null);
+      flex-wrap: wrap;
+      height: auto;
+      
+      &__circle {
+        position: relative;
+        @include align(flex, center, center, null, null);
+        .circleFill {
+          @include position(absolute,0, null,0,null,0.9rem,null) ;
+          border: 1px sold #fff;
+          outline: 2px solid #fff;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          transform: translate(-20%, 0%)
+        }
+
+        .icon {
+          font-size: 2.5rem;
+        }
+
+        .red {
+          fill: $danger;
+        }
+
+        .green {
+          fill: $success;
+        }
+
+        .blue {
+          fill: $active;
+        }
+        
+        > svg {
+          width: 1.6rem;
+          height: 1.8rem;
+          fill: $white;
+        }
+      }
+
+      &__arrow {
+        .square {
+          height: 7.8rem;
+          clip-path: polygon(
+            53% 0,
+            82% 0,
+            69% 59%,
+            59% 100%,
+            31% 100%,
+            25% 60%,
+            18% 0
+          );
+          background-color: #ece4e4;
+        }
+        .triangle {
+          width: 0.9rem;
+          height: 0.5rem;
+          clip-path: polygon(50% 64%, 2% 0, 100% 0);
+          background-color: #ece4e4;
+        }
+      }
     }
 
-    .info-container__card {
-        padding: 0.2rem .5rem;
-        border-radius: 1rem;
+    &__right {
+      width: 500px;
+      padding-bottom: 2.5rem;
+      border-bottom: 4px solid #eff1f4;
+      @include align(flex, space-between,nul,null,null);
+
+      &__details {
+        @include align(flex, null,null,null, column);
+        gap: 1rem;
+
+        &__info {
+          display: flex;
+          gap: 1rem;
+          color: $black
+
+        }
+
+        &__data {
+          @include align(flex, null, null, null, column);
+          gap: 1rem;
+          > p {
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+          }
+          > h3 {
+            color: $black
+          }
+        }
+      }
     }
+  }
+
+  .info-container__card {
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    width: fit-content;
+  }
 }
+
+// contents__progress-info__data

@@ -1,8 +1,8 @@
-@use '../abstracts/variables';
+@use '../abstracts/index' as abs;
 .header {
 
     &__title {
-        color: variables.$black;
+        color: abs.$black;
         font-weight: 600;
         font-size: 22px;
         line-height: 28px;

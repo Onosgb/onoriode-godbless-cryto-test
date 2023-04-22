@@ -1,91 +1,92 @@
-@use '../abstracts/mixins' as *;
-@use '../abstracts/variables' as *;
+@use "../abstracts/index" as *;
+
 
 .main {
-width: 100%;
-background-color: #E5E5E5;
-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
-@include scroll;
-overflow: auto;
+  width: 100%;
+  background-color: #e5e5e5;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  @include scroll;
+  overflow: auto;
 }
 
 .container {
-    width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .btn-success {
-   @include button($white,$default,inherit,1.4rem,$active,null,null)  
+  @include button($white, $default, inherit, 1.4rem, $active, null, null);
 }
 
 .title {
-    font-weight: 600;
-    font-size: 1.6rem;
-    line-height: 2.8rem;
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 2.8rem;
+  color: $black
 }
 
 .sub-title {
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 16px; 
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: $black
 }
 
 .small-circle {
-    @include shape(1rem, 1rem, null, 50%)
+  @include shape(1rem, 1rem, null, 50%);
 }
 
 .large-circle {
-    @include shape(4.8rem, 4.8rem, null, 50%)
+  @include shape(4.8rem, 4.8rem, null, 50%);
 }
 
 .small-sqr {
-    @include shape(1rem, 1rem, null, null);
+  @include shape(1rem, 1rem, null, null);
 }
 
 .larg-sqr {
-    @include shape(5rem, 5rem, null, null);  
+  @include shape(5rem, 5rem, null, null);
 }
 
 .text-danger {
-    color: $danger;
+  color: $danger;
 }
 .text-default {
-    color: $black;
+  color: $black;
 }
 .bg-danger {
-    background-color: $danger;
-    color: $white;
+  background-color: $danger;
+  color: $white;
 }
 
 .bg-success {
-    background-color: $success;
-    color: $white;
+  background-color: $success;
+  color: $white;
 }
 
 .bg-warning {
-    background-color: $warning;
-    color: $white;
+  background-color: $warning;
+  color: $white;
 }
 
 .bg-default {
-    background-color: $default;
+  background-color: $default;
 }
 
 .bg-primary {
-    background-color: $active;
-    color: $white;
+  background-color: $active;
+  color: $white;
 }
 
 .bg-secondary {
-    background-color: $purple;
-    color: $white;
+  background-color: $purple;
+  color: $white;
 }
 .text-primary {
   color: $active;
 }
-
