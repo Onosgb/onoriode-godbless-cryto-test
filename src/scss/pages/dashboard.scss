@@ -12,7 +12,7 @@
 
   // responsiveness
   @include respond(phone) {
-    width: 95%;
+    width: 95vw;
     padding: 2rem;
     height: 95vh;
   }
