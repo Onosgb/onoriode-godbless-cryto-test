@@ -1,5 +1,5 @@
 import {Metrics} from '../models/metrics'
-export const metricsService = async ():Promise<Metrics> => {
+export const metricsService = async (): Promise<Metrics> => {
     return {
         "errors_last_3days": [
           {

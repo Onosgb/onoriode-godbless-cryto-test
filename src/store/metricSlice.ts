@@ -31,23 +31,6 @@ export const fetchMetricsAsync = createAsyncThunk(
   }
 );
 
-export const getMetricByIdAsync = createAsyncThunk(
-  "Metric/get",
-  async (id: string, { rejectWithValue }) => {
-    try {
-      const response = await metricsService();
-
-      return response;
-    } catch (err: any) {
-      if (!err.response) {
-        throw err;
-      }
-
-      return rejectWithValue(err.response);
-    }
-  }
-);
-
 export const MetricSlice = createSlice({
   name: "Metrics",
   initialState,
@@ -73,20 +56,7 @@ export const MetricSlice = createSlice({
         state.status = "failed";
       })
 
-      .addCase(getMetricByIdAsync.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(
-        getMetricByIdAsync.fulfilled,
-
-        (state, action: PayloadAction<Metrics>) => {
-          state.metrics = action.payload;
-          state.status = "idle";
-        }
-      )
-      .addCase(getMetricByIdAsync.rejected, (state) => {
-        state.status = "failed";
-      });
+     
   },
 });
 
